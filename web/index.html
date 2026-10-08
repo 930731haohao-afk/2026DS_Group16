@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="搜尋 AI 技術、地緣政治、哲學、經濟與社會議題，找到可閱讀的原始網頁。資料結構 Group 16 專題。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23266753'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='22' fill='white'%3E%E7%9F%A5%3C/text%3E%3C/svg%3E">
+  <title>知途 AI · AI 知識搜尋</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="知途 AI 首頁">知途 AI</a>
+    <nav class="tab-list" role="tablist" aria-label="功能">
+      <button id="tab-search" class="tab active" role="tab" aria-selected="true" aria-controls="panel-search" data-tab="search">知識搜尋</button>
+      <button id="tab-count" class="tab" role="tab" aria-selected="false" aria-controls="panel-count" tabindex="-1" data-tab="count">關鍵字實驗</button>
+      <button id="tab-evaluation" class="tab" role="tab" aria-selected="false" aria-controls="panel-evaluation" tabindex="-1" data-tab="evaluation">評估工作台</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="panel-search" role="tabpanel" aria-labelledby="tab-search">
+      <h1>AI 知識搜尋</h1>
+
+      <form id="search-form" class="search-box">
+        <label class="sr-only" for="query">你想了解的 AI 問題</label>
+        <div class="search-input-row"><input id="query" name="query" maxlength="240" required placeholder="輸入 AI 相關概念或議題，例如 RSI、AI 與就業" autocomplete="off"><button id="search-submit" class="primary" type="submit">搜尋</button></div>
+        <div class="intent-row"><fieldset class="intent-options"><legend class="sr-only">搜尋目的</legend><label><input type="radio" name="intent" value="concept" checked><span>概念與背景</span></label><label><input type="radio" name="intent" value="compare"><span>觀點與比較</span></label><label><input type="radio" name="intent" value="build"><span>研究與應用</span></label></fieldset><button class="text-button" id="settings-toggle" type="button" aria-expanded="false" aria-controls="search-settings">搜尋設定</button></div>
+        <div id="search-settings" class="settings-panel" hidden>
+          <div class="settings-grid"><label class="field">資料來源<select id="mode"><option value="live" selected>即時公開來源搜尋</option><option value="urls">自行提供公開網址</option><option value="demo">自編示範資料（課堂實驗用）</option></select></label><label class="field">結果筆數<select id="limit"><option value="3">3 筆</option><option value="5" selected>5 筆</option><option value="10">10 筆</option></select></label><label class="field">走訪深度<select id="max-depth"><option value="0">0 · 只看起始頁</option><option value="1" selected>1 · 含下一層連結</option><option value="2">2 · 含兩層連結</option></select></label><label class="field">網頁總預算<input id="max-pages" type="number" min="1" max="40" value="20" required></label></div>
+          <label id="urls-field" class="field" hidden>候選網址（每行一個，最多 10 個，限支援來源的 HTTPS 網頁）<textarea id="urls" rows="3" placeholder="https://huggingface.co/learn/llm-course/chapter1/1"></textarea></label><p id="url-hosts-note" class="settings-help" hidden></p>
+          <div class="switches"><label><input type="checkbox" id="expand" checked> 擴展相關詞</label><label title="需在伺服器設定 Jev"><input type="checkbox" id="use-jev" disabled> Jev 相關性評分 <span id="jev-state" class="mini-tag">未設定</span></label><label title="需在伺服器設定回答模型"><input type="checkbox" id="use-answer" disabled> RAG 來源回答 <span id="answer-state" class="mini-tag">未設定</span></label></div><p class="settings-help">依取得的資料計分；只有成功讀取全文的來源才有全文計數與網址走訪。僅取得搜尋摘要時會明確標示，仍可點開原文。</p>
+        </div>
+      </form>
+
+      <div class="examples"><span>範例：</span><button type="button" data-example="RSI" data-intent="concept">RSI</button><button type="button" data-example="AI 地緣政治" data-intent="compare">AI 地緣政治</button><button type="button" data-example="AI 意識 哲學" data-intent="compare">AI 意識</button><button type="button" data-example="AI 就業 經濟" data-intent="build">AI 就業</button></div>
+      <div id="data-notice" class="data-notice" role="status"><p>正在連接本機搜尋服務…</p></div>
+
+      <div class="results-layout">
+        <div class="results-main"><div class="section-heading"><h2 id="result-heading">搜尋結果</h2><div class="result-actions"><button id="export-search-json" class="quiet-button" type="button" disabled>匯出 JSON</button><button id="export-search-csv" class="quiet-button" type="button" disabled>匯出 CSV</button></div></div><p id="search-status" class="result-meta" role="status" aria-live="polite">輸入問題開始搜尋。</p><div id="search-error" class="error-box" role="alert" hidden></div><div id="search-warnings" hidden></div><div id="answer-card" class="answer-card" hidden></div><div id="results" aria-busy="false"></div><details id="run-details" class="run-card" hidden></details></div>
+      </div>
+    </section>
+
+    <section id="panel-count" role="tabpanel" aria-labelledby="tab-count" hidden>
+      <div class="page-heading"><h1>關鍵字計數</h1><p>選擇網頁並輸入關鍵字，查看出現次數。</p></div>
+      <div class="lab-grid"><form id="count-form" class="panel-card"><div class="numbered-title"><span>01</span><h2>設定實驗</h2></div><label class="field">資料來源<select id="count-mode"><option value="demo">示範資料集</option><option value="live">公開網頁</option></select></label><label class="field" id="demo-page-field">選擇示範頁面<select id="demo-page"><option value="">載入中…</option></select></label><label class="field" id="count-url-field" hidden>公開網頁網址<input id="count-url" type="url" placeholder="https://example.org/article"></label><label class="field">多個關鍵字以逗號分隔<input id="count-keywords" required maxlength="200" value="RAG, retrieval, Python" placeholder="RAG, Python"></label><button class="primary" id="count-submit" type="submit">計算出現次數 <span aria-hidden="true">↗</span></button><p class="settings-help">英文不分大小寫；詞彙邊界避免 RAG 誤算到 paragraph。次數反映字詞出現，不能單獨代表文章品質。</p></form><section class="panel-card count-output"><div class="numbered-title"><span>02</span><h2>觀察結果</h2></div><div id="count-result" aria-live="polite"><div class="empty-state"><div class="empty-mark" aria-hidden="true">Aa</div><h3>從你選的關鍵字開始</h3><p>執行後，這裡會顯示每個詞的次數與頁面資訊。</p></div></div></section></div>
+    </section>
+
+    <section id="panel-evaluation" role="tabpanel" aria-labelledby="tab-evaluation" hidden>
+      <div class="page-heading"><h1>搜尋評估</h1><p>使用共同題庫記錄判讀，計算各種方法的表現。</p></div>
+      <div class="eval-intro"><div><span class="stat-number" id="question-total">—</span><span>共同測試題</span></div><div><span class="stat-number" id="dev-total">—</span><span>開發調整用</span></div><div><span class="stat-number" id="test-total">—</span><span>保留測試用</span></div><p>先用開發題調整權重；固定設定後，再用保留題評估。<br>尚未填入真實觀察前，不產生勝負結論。</p></div>
+      <div id="evaluation-error" class="error-box" role="alert" hidden></div><p id="evaluation-instructions" class="muted"></p>
+      <section class="panel-card question-card"><div class="section-heading"><div><p class="eyebrow">01 · PREPARE</p><h2>同一份題目，公平比較</h2></div><div class="result-actions"><button id="export-evaluation" class="quiet-button" type="button" disabled>目前篩選評分 CSV ↓</button><button id="export-prompts" class="quiet-button" type="button" disabled>目前篩選提示詞 JSON ↓</button></div></div><div class="question-filters"><label class="field">題庫用途<select id="question-split"><option value="dev" selected>開發用</option><option value="all">全部題目</option><option value="test">保留測試用</option></select></label><label class="field">搜尋目的<select id="question-intent"><option value="all">所有目的</option><option value="concept">概念與背景</option><option value="compare">觀點與比較</option><option value="build">研究與應用</option></select></label><span id="question-count" class="muted"></span></div><div class="table-scroll question-scroll"><table class="data-table"><thead><tr><th scope="col">編號</th><th scope="col">問題</th><th scope="col">目的</th><th scope="col">用途</th><th scope="col">判讀參考</th></tr></thead><tbody id="questions-body"></tbody></table></div></section>
+      <div class="evaluation-grid"><section class="panel-card"><div class="section-heading"><div><p class="eyebrow">02 · OBSERVE</p><h2>填入一組搜尋觀察</h2></div></div><form id="rating-form"><label class="field">測試題<select id="rating-question" required></select></label><div class="two-columns"><label class="field">比較系統<select id="rating-system"><option value="google">Google</option><option value="baseline">候選來源原始排名</option><option value="rules">自訂規則</option><option value="jev">規則 + Jev</option><option value="expanded">規則 + 相關詞擴展</option><option value="llm_plain">LLM 一般提問</option><option value="llm_strategy">LLM 搜尋策略</option></select></label><label class="field">找到正確資料耗時（秒，可留白）<input id="rating-seconds" type="number" min="0" max="86400" step="0.1" placeholder="例如 42.5"></label></div><p class="small muted">逐筆判斷前五筆是否符合題目。沒有第五筆時，該筆計為不相關；耗時只計一次。每題、每系統儲存最新一次觀察。</p><div id="rating-ranks" class="rating-ranks"></div><button class="primary" type="submit">加入評估紀錄 <span aria-hidden="true">＋</span></button><p id="rating-feedback" class="small" role="status"></p></form></section><section class="panel-card"><div class="section-heading"><div><p class="eyebrow">03 · COMPARE</p><h2>計算實驗指標</h2></div><span class="mini-tag" id="rows-count">0 筆紀錄</span></div><p class="small muted">資料暫存在這個分頁，重新整理後會清除。請下載保存。匯入 CSV 會取代目前紀錄。</p><div class="result-actions align-left"><button class="quiet-button" id="download-ratings" disabled type="button">下載紀錄 CSV ↓</button><button class="quiet-button danger" id="clear-ratings" disabled type="button">清除紀錄</button></div><details class="import-details"><summary>匯入已填寫的評分 CSV</summary><label class="field">CSV 檔案<input id="ratings-file" type="file" accept=".csv,text/csv"></label><label class="field">或貼上 CSV<textarea id="ratings-csv" rows="4" placeholder="queryId,system,rank,relevant,seconds"></textarea></label><button class="quiet-button" id="import-ratings" type="button">載入 CSV</button><p id="import-feedback" role="status" class="small"></p></details><button class="primary wide-button" id="evaluate-submit" type="button" disabled>計算指標 <span aria-hidden="true">↗</span></button><div id="metrics" aria-live="polite"><p class="metric-placeholder">填入觀察後，才會顯示計算結果。</p></div></section></div>
+    </section>
+  </main>
+  <footer class="site-footer"><span>資料結構專題 · 第 16 組</span><span id="connection-state">連線中</span></footer>
+</body>
+</html>

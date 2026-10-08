@@ -1,0 +1,9 @@
+.git
+.env
+.env.*
+work
+build
+outputs
+logs
+*.log
+src/test

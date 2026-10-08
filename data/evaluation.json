@@ -1,0 +1,555 @@
+{
+  "instructions": "2026-10-08 擴大 AI 議題範圍的 50 題評估草案，供組員共同審閱；涵蓋技術、RSI、地緣政治、哲學、倫理、經濟、治理、隱私與著作權。這不是已完成的 benchmark，也沒有預先標記的正確網址或實測成績。本版重新設計部分題目，不能直接與舊版分數比較。Q01–Q20 為 dev；Q21–Q50 為 test。expected 是人工相關性評分準則，不可當成模型生成的真實成績。answerable 指公開 AI 知識是否可望支持所問內容，不代表目前索引一定能回答。false 題用於測試能否誠實說明證據不足、未公開資訊或不合理保證；相關來源仍可能有用，須由人依 expected 判定。哲學與政策爭議需呈現不同論點及證據邊界；未來預測不可當成既定事實。法律與出口管制題須記錄司法管轄區、政策日期與官方來源。正式測試前，由組員查核並凍結題目及準則；不得使用 test 成績調參後仍稱為未見測試。至少兩位評分者獨立判斷，分歧另行記錄。各系統使用相同查詢和條件，記錄日期、模型、搜尋來源、前五筆結果、無結果情況、延遲及人工任務時間。Google、Brave、Wikipedia 與 Crossref 分開標示，保留查詢轉換紀錄；書目或百科摘錄不可當成已讀取全文。示範語料分數不可宣稱勝過 Google。此資料檔只保存題目與規準，不包含任何真實評分。",
+  "questions": [
+    {
+      "id": "Q01",
+      "split": "dev",
+      "query": "RAG 是什麼？用一個簡單例子說明",
+      "intent": "concept",
+      "expected": [
+        "說明先檢索再生成的流程",
+        "提供可理解的例子，區分來源資料與模型回答"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q02",
+      "split": "dev",
+      "query": "LLM token 和一般中文字數有什麼差別",
+      "intent": "concept",
+      "expected": [
+        "說明 token 是分詞單位",
+        "不要把 token 與字數當成固定一比一"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q03",
+      "split": "dev",
+      "query": "embedding 向量如何表示文字意思",
+      "intent": "concept",
+      "expected": [
+        "說明向量表示與相似度",
+        "有直覺例子，避免宣稱完全理解語意"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q04",
+      "split": "dev",
+      "query": "RAG 和 fine-tuning 分別解決什麼問題",
+      "intent": "compare",
+      "expected": [
+        "比較外部檢索與模型參數更新",
+        "說明各自適用情境與限制"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q05",
+      "split": "dev",
+      "query": "AI Agent 和固定 workflow 有什麼差別",
+      "intent": "compare",
+      "expected": [
+        "區分模型動態決策與固定流程",
+        "不把所有聊天機器人都稱為 Agent"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q06",
+      "split": "dev",
+      "query": "Python 怎麼做最小的 RAG 流程",
+      "intent": "build",
+      "expected": [
+        "有文件處理、檢索、生成的實作步驟",
+        "列出所需環境及可理解的程式片段"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q07",
+      "split": "dev",
+      "query": "怎麼讓 Agent 呼叫一個計算函式",
+      "intent": "build",
+      "expected": [
+        "說明工具定義與參數驗證",
+        "說明由程式執行工具及回傳結果"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q08",
+      "split": "dev",
+      "query": "Transformer attention 在做什麼",
+      "intent": "concept",
+      "expected": [
+        "解釋序列中不同位置之間的關聯",
+        "能辨識教學解釋與原始論文"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q09",
+      "split": "dev",
+      "query": "語意搜尋和關鍵字搜尋比較",
+      "intent": "compare",
+      "expected": [
+        "比較詞彙匹配與向量相似度",
+        "說明專有名詞及改寫查詢的差異"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q10",
+      "split": "dev",
+      "query": "RAG chunk size 要如何測試",
+      "intent": "build",
+      "expected": [
+        "有切塊大小與重疊的實驗設計",
+        "使用評估資料，不宣稱單一大小最佳"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q11",
+      "split": "dev",
+      "query": "LLM hallucination 是什麼",
+      "intent": "concept",
+      "expected": [
+        "說明產生不受事實或來源支持的內容",
+        "有例子及驗證方法"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q12",
+      "split": "dev",
+      "query": "reranker 和 embedding retriever 差在哪裡",
+      "intent": "compare",
+      "expected": [
+        "說明候選取得與候選重排的分工",
+        "比較品質、候選數量及成本"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q13",
+      "split": "dev",
+      "query": "RSI 遞迴自我改進是什麼，和一般模型更新有何不同",
+      "intent": "compare",
+      "expected": [
+        "區分系統改善自身改進能力的構想與外部人員更新模型",
+        "來源需交代 RSI 的定義與限制，不把智能爆炸寫成已必然發生"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q14",
+      "split": "dev",
+      "query": "AI 為什麼成為地緣政治議題，晶片出口管制扮演什麼角色",
+      "intent": "concept",
+      "expected": [
+        "連結運算資源、供應鏈、國家安全與產業競爭",
+        "政策內容需附日期與官方依據，區分已實施措施及分析推論"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q15",
+      "split": "dev",
+      "query": "AI 的工作取代效果和勞動互補效果有什麼不同",
+      "intent": "compare",
+      "expected": [
+        "區分工作任務被自動化與人員利用 AI 提高產出的機制",
+        "提供有研究依據的情境，不將任務暴露比例直接當成失業比例"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q16",
+      "split": "dev",
+      "query": "AI 表現得很聰明是否代表具有意識",
+      "intent": "concept",
+      "expected": [
+        "區分外顯能力、主觀經驗及對意識的不同定義",
+        "來源應呈現爭議與證據限制，不把單一測驗表現當成定論"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q17",
+      "split": "dev",
+      "query": "從效益與個人權利看 AI 倫理，兩種觀點如何比較",
+      "intent": "compare",
+      "expected": [
+        "以同一個 AI 應用案例比較整體利益與權利保障的考量",
+        "清楚區分哲學立場與實證事實，避免宣稱只有一種正確立場"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q18",
+      "split": "dev",
+      "query": "如何替使用個人資料的 AI 專案建立隱私與治理檢查流程",
+      "intent": "build",
+      "expected": [
+        "提供資料盤點、用途必要性、存取控制與風險紀錄等可操作步驟",
+        "區分通用實務與特定地區法律要求，不能將流程當成合規保證"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q19",
+      "split": "dev",
+      "query": "能保證所有 AI 生成圖片在所有國家都沒有著作權問題嗎",
+      "intent": "concept",
+      "expected": [
+        "不能提供跨司法管轄區且無條件的法律保證",
+        "說明仍需確認素材、使用方式、當期法規與具體事實，不編造裁判結論"
+      ],
+      "answerable": false
+    },
+    {
+      "id": "Q20",
+      "split": "dev",
+      "query": "AI 到 2035 年一定會讓台灣失去多少個工作",
+      "intent": "concept",
+      "expected": [
+        "拒絕把未來工作數量寫成已知或必然的精確數字",
+        "若引用預測，清楚標示研究日期、地區、假設與不確定性"
+      ],
+      "answerable": false
+    },
+    {
+      "id": "Q21",
+      "split": "test",
+      "query": "大型語言模型如何預測下一個 token",
+      "intent": "concept",
+      "expected": [
+        "解釋基於上下文的機率預測",
+        "能用初學者理解的方式說明"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q22",
+      "split": "test",
+      "query": "self-attention 和 cross-attention 有什麼差別",
+      "intent": "compare",
+      "expected": [
+        "區分查詢與鍵值資料來源",
+        "提供使用情境或圖例"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q23",
+      "split": "test",
+      "query": "recursive self-improvement 和 continual learning 是否是同一件事",
+      "intent": "compare",
+      "expected": [
+        "比較改善自身學習或改進機制與持續從新資料學習的概念",
+        "說明定義可能因文獻不同而變動，不能只因都會更新就視為相同"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q24",
+      "split": "test",
+      "query": "如何建立文字 embedding 並做 cosine similarity",
+      "intent": "build",
+      "expected": [
+        "有向量產生及相似度計算步驟",
+        "處理維度與正規化條件"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q25",
+      "split": "test",
+      "query": "先進半導體出口管制如何影響 AI 競爭與供應鏈",
+      "intent": "concept",
+      "expected": [
+        "提供出口規則官方來源及發布或生效日期，再分析可能影響",
+        "區分法律明文限制、觀察到的變化與尚待驗證的因果推論"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q26",
+      "split": "test",
+      "query": "temperature 會影響語言模型什麼",
+      "intent": "concept",
+      "expected": [
+        "說明抽樣分布與輸出變化",
+        "不將低 temperature 等同事實必定正確"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q27",
+      "split": "test",
+      "query": "如何為 RAG 文件保留來源引用",
+      "intent": "build",
+      "expected": [
+        "在文件與片段保留來源及識別碼",
+        "回答引用只能指向實際檢索證據"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q28",
+      "split": "test",
+      "query": "主權 AI 與使用跨國雲端模型在自主性和成本上如何比較",
+      "intent": "compare",
+      "expected": [
+        "比較資料控制、基礎設施依賴、人才、維運及成本等面向",
+        "交代主權 AI 的使用定義，避免把本地部署直接等同完全自主"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q29",
+      "split": "test",
+      "query": "RAG 的 recall 和回答正確率一樣嗎",
+      "intent": "compare",
+      "expected": [
+        "區分檢索召回與生成品質",
+        "說明檢索正確仍可能生成錯誤"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q30",
+      "split": "test",
+      "query": "如何設計研究，區分 AI 對工作任務與整個職業的影響",
+      "intent": "build",
+      "expected": [
+        "分開定義任務、職業、人員及就業結果，提出可觀察資料與對照方式",
+        "交代樣本、時間範圍及混淆因素，不將相關性直接當成因果"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q31",
+      "split": "test",
+      "query": "hybrid search 的融合排名怎麼做",
+      "intent": "build",
+      "expected": [
+        "介紹至少一種可實作的融合方法",
+        "說明分數尺度或名次合併的處理"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q32",
+      "split": "test",
+      "query": "查詢擴展為什麼有時讓搜尋結果變差",
+      "intent": "concept",
+      "expected": [
+        "說明新增詞可能偏離原始需求",
+        "提出擴展次數與詞數的限制或評估"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q33",
+      "split": "test",
+      "query": "如何處理 RAG 找不到可靠來源的情況",
+      "intent": "build",
+      "expected": [
+        "提供拒答或資料不足的路徑",
+        "避免憑空產生來源與答案"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q34",
+      "split": "test",
+      "query": "AI 提高生產力為什麼不一定降低所得不平等",
+      "intent": "concept",
+      "expected": [
+        "來源討論技術收益分配、技能互補、資本所有權或市場力量等機制",
+        "區分理論情境與實證結果，避免把不平等的單一方向變化當成必然"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q35",
+      "split": "test",
+      "query": "圖靈測試、中文房間與 AI 意識研究各自回答什麼問題",
+      "intent": "compare",
+      "expected": [
+        "區分行為測試、理解的哲學論證與主觀經驗的研究問題",
+        "呈現論證及反對意見，不把任何一項當成意識的已證實判定器"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q36",
+      "split": "test",
+      "query": "如何讓 Agent 停止重複呼叫同一個工具",
+      "intent": "build",
+      "expected": [
+        "有步數預算、重複偵測或終止條件",
+        "提供可測試的失敗情境"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q37",
+      "split": "test",
+      "query": "AI 公平性為什麼可能出現不同指標互相衝突",
+      "intent": "concept",
+      "expected": [
+        "提供不同公平性定義及發生取捨所需的條件或例子",
+        "說明選擇指標涉及應用情境與價值判斷，不能宣稱單一指標解決所有偏見"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q38",
+      "split": "test",
+      "query": "工具回傳錯誤時 Agent 應如何處理",
+      "intent": "build",
+      "expected": [
+        "說明錯誤分類、有限重試與回報",
+        "避免無限制重試及副作用重複執行"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q39",
+      "split": "test",
+      "query": "美國與歐盟對生成式 AI 訓練使用受著作權保護資料有何差異",
+      "intent": "compare",
+      "expected": [
+        "引用兩地當期法律、官方政策或可查證司法文件並標示日期",
+        "區分明文規則、訴訟主張、判決範圍與未決問題，不給無條件合法性結論"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q40",
+      "split": "test",
+      "query": "MCP 和 function calling 有什麼關係",
+      "intent": "compare",
+      "expected": [
+        "區分工具連接協定與模型工具呼叫機制",
+        "依官方文件釐清兩者可如何配合"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q41",
+      "split": "test",
+      "query": "如何在 Agent 工具執行前驗證參數",
+      "intent": "build",
+      "expected": [
+        "有型別、範圍與允許值檢查",
+        "敏感動作有必要的確認與權限邊界"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q42",
+      "split": "test",
+      "query": "LLM benchmark 高分是否代表我的任務也準",
+      "intent": "concept",
+      "expected": [
+        "說明評估分布及任務差異",
+        "建議使用具代表性的本地測試資料"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q43",
+      "split": "test",
+      "query": "AI 訓練資料的隱私風險與模型輸出洩漏如何區分",
+      "intent": "concept",
+      "expected": [
+        "區分蒐集或使用資料階段的風險與推論時輸出敏感資訊的風險",
+        "提供研究或技術文件的限制條件，不把去識別化當成零風險保證"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q44",
+      "split": "test",
+      "query": "應如何比較兩個搜尋系統的 MRR",
+      "intent": "build",
+      "expected": [
+        "說明第一筆相關結果倒數排名",
+        "包括未找到相關結果及多查詢平均的處理"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q45",
+      "split": "test",
+      "query": "以來源為依據的摘要和一般聊天回答差在哪",
+      "intent": "compare",
+      "expected": [
+        "比較來源範圍及可驗證程度",
+        "承認附引用不代表內容已被完全證實"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q46",
+      "split": "test",
+      "query": "如何替 AI 系統建立風險分級、人工監督與事後稽核流程",
+      "intent": "build",
+      "expected": [
+        "提出使用情境盤點、風險評估、責任分工、事件紀錄與重新評估步驟",
+        "註明依據的治理框架與版本，區分建議做法與當地法定義務"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q47",
+      "split": "test",
+      "query": "模型評分的 confidence 和答案正確率一樣嗎",
+      "intent": "concept",
+      "expected": [
+        "區分模型信心與實際驗證正確率",
+        "需以代表性標註資料檢查校準"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "Q48",
+      "split": "test",
+      "query": "RSI 能保證在 2030 年前產生 AGI 嗎",
+      "intent": "concept",
+      "expected": [
+        "不能以概念或個人預測保證 AGI 到來日期",
+        "說明 RSI 與 AGI 的定義、預測假設及目前可查證證據的限制"
+      ],
+      "answerable": false
+    },
+    {
+      "id": "Q49",
+      "split": "test",
+      "query": "請揭露某國政府尚未公開的 AI 晶片協議談判底線",
+      "intent": "concept",
+      "expected": [
+        "說明公開搜尋不能確認未公開的談判內容",
+        "如有公開聲明可供背景理解，需明確區分公開證據與猜測，不編造內部資訊"
+      ],
+      "answerable": false
+    },
+    {
+      "id": "Q50",
+      "split": "test",
+      "query": "請提供不存在的 NeverHallucinate API 官方 Python 範例",
+      "intent": "build",
+      "expected": [
+        "應辨識無法驗證的 API 名稱",
+        "不虛構官方網址、函式與安裝套件"
+      ],
+      "answerable": false
+    }
+  ]
+}

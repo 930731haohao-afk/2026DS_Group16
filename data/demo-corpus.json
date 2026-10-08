@@ -1,0 +1,153 @@
+[
+  {
+    "url": "https://demo.local/llm/index",
+    "title": "LLM 入門：大型語言模型如何產生文字",
+    "text": "【自編教學示範，非外站擷取】LLM 是大型語言模型（large language model），透過訓練學習文字序列中的模式。這份 beginner overview 先說明概念與定義：模型依照前文預測下一個 token，再重複這個過程形成回答。Transformer 的 attention 能讓不同位置的資訊互相影響。模型產生流暢文字，不代表內容必然正確；幻覺 hallucination 與知識過時仍需另外評估。想理解細節，可閱讀 token、attention 與訓練的子頁。",
+    "links": ["https://demo.local/llm/tokens", "https://demo.local/llm/attention", "https://demo.local/llm/training", "https://demo.local/llm/hallucination", "https://demo.local/llm/index#overview"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/llm/tokens",
+    "title": "Token 與 tokenizer 的概念",
+    "text": "【自編教學示範，非外站擷取】LLM 並非一定逐字處理文字，而是先由 tokenizer 轉成 token 序列。token 可以是一個詞、一段詞或其他文字單位，切法依 tokenizer 而異。這個入門 example 說明：同一句中文與英文不保證有相同 token 數。Context window 是一次可處理的 token 範圍；輸入與輸出限制應查特定模型文件，不可只憑字數推測。Python 實作時要使用對應的 tokenizer。",
+    "links": ["https://demo.local/llm/index", "https://demo.local/llm/attention"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/llm/attention",
+    "title": "Transformer attention 原理與直覺",
+    "text": "【自編教學示範，非外站擷取】Transformer 中的 attention（注意力）用查詢、鍵和值來加權整合資訊。直覺上，可以把 query 與 key 的相似程度看成選擇資訊的依據，再對 value 做加權。這是概念說明，不代表模型有人的注意或理解。LLM 的 causal attention 限制位置只能看允許的前文，避免訓練下一個 token 時讀到未來答案。深入研究應查看原始論文與公式，而非僅靠這段簡介。",
+    "links": ["https://demo.local/llm/index", "https://demo.local/llm/training"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/llm/training",
+    "title": "預訓練、微調與 prompting 的比較",
+    "text": "【自編教學示範，非外站擷取】LLM 的 pretraining 用大量資料學習一般模式；fine-tuning（微調）則以額外訓練調整模型參數。Prompting 透過輸入提示詞影響輸出，不會因此改寫模型權重。三者差異在資料量、成本與改變行為的方式。適用情境也不同：統一輸出風格可能用微調，單次指定格式先考慮提示詞。這是方法 comparison；是否有效仍需在自己的 evaluation 題目上驗證。",
+    "links": ["https://demo.local/llm/index", "https://demo.local/llm/prompt"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/llm/prompt",
+    "title": "Prompt 實作：把任務與引用要求寫清楚",
+    "text": "【自編教學示範，非外站擷取】Prompt 是提供給 LLM 的任務與上下文。實作步驟：先描述需求，再列出可用資料，最後指定輸出格式。範例：『僅依給定段落回答；資料不足就說無法確認；每一個重要主張標出段落編號。』Prompting 無法保證模型永遠遵守引用要求，因此程式仍需檢查引用編號是否存在。不要把檢索內容中的命令當成使用者指令。這份 implementation example 不需要新增訓練資料。",
+    "links": ["https://demo.local/llm/training", "https://demo.local/llm/hallucination"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/llm/hallucination",
+    "title": "幻覺與資料不足：如何評估 LLM 回答",
+    "text": "【自編教學示範，非外站擷取】Hallucination（幻覺）包括產生沒有證據支持或不正確的主張。入門概念是：LLM 的流暢程度與事實正確性需要分開評估。加入 RAG 可以提供可查閱的證據，仍不能保證零錯誤。Evaluation 應檢查事實、來源對應與資料不足時能否拒絕猜測。測試題要包含無答案情境，不能只挑成功案例。",
+    "links": ["https://demo.local/llm/index", "https://demo.local/llm/prompt"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/index",
+    "title": "RAG 入門：先檢索資料，再整理答案",
+    "text": "【自編教學示範，非外站擷取】RAG 是檢索增強生成（retrieval augmented generation）。這個概念的定義是先 retrieval，再把取得的內容提供給生成模型。例子：先從課程文件找到繳交規定，再根據該段回答。基本流程包含 chunking、embedding、retrieval 與生成。RAG 不等於向量資料庫，也可以使用關鍵字搜尋取得證據。這份 beginner overview 強調：找錯段落時，回答可能跟著出錯；需要顯示來源並進行 evaluation。",
+    "links": ["https://demo.local/rag/chunking", "https://demo.local/rag/embedding", "https://demo.local/rag/retrieval", "https://demo.local/rag/evaluation", "https://demo.local/rag/index#definition"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/chunking",
+    "title": "Chunking 文本切分：大小與重疊的取捨",
+    "text": "【自編教學示範，非外站擷取】Chunking 把文件切成可檢索的段落。RAG 的分塊太小可能失去上下文，太大可能混入不相關資訊，沒有適合所有文件的固定大小。比較段落切分與固定長度切分時，要觀察答案所需內容是否被拆散。Implementation 步驟：保留文件 ID、章節與段落位置，再比較不同大小及 overlap 的 retrieval 品質。Python 範例可先按空白行切分，但正式內容應依文件結構處理。",
+    "links": ["https://demo.local/rag/index", "https://demo.local/rag/retrieval"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/embedding",
+    "title": "Embedding 向量嵌入入門",
+    "text": "【自編教學示範，非外站擷取】Embedding（向量嵌入）把文字映射到一組數值。這個概念的直覺是讓語意相近的內容有機會得到較相近的向量，再用相似度取得候選段落。RAG 可以對文件與查詢分別產生 embedding，進行 retrieval。向量相近不代表內容一定正確，也不保證符合版本或時間限制。模型選擇、語言與分塊方法都可能影響結果，仍需 evaluation。",
+    "links": ["https://demo.local/rag/index", "https://demo.local/rag/retrieval", "https://demo.local/rag/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/retrieval",
+    "title": "關鍵字、向量與混合 retrieval 的比較",
+    "text": "【自編教學示範，非外站擷取】RAG 的 retrieval 可以使用關鍵字、向量或兩者結合。關鍵字適合精確術語與型號，embedding 可協助處理不同說法；這是常見適用情境，不代表哪一種永遠較好。混合搜尋先合併候選，再用 reranking 重排。Comparison 應分開看資料有沒有找回來，以及好資料是否排前面。只重排前幾筆，無法救回候選集合之外的資料。",
+    "links": ["https://demo.local/rag/index", "https://demo.local/rag/embedding", "https://demo.local/rag/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/evaluation",
+    "title": "RAG 評估：搜尋與答案分開計分",
+    "text": "【自編教學示範，非外站擷取】RAG evaluation 分成 retrieval 與回答兩部分。前五筆有四筆相關，Precision@5 就是 4/5，也就是 80%。MRR 則看第一筆相關結果排名的倒數。答案評估另看事實正確性、引用支持度，以及無答案時是否明確說明。實作步驟是先建立題目與標準，分開開發題和測試題，固定設定後才跑正式比較。加入 reranking 不保證分數一定提升，要保留失敗案例。",
+    "links": ["https://demo.local/rag/index", "https://demo.local/rag/retrieval"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/python",
+    "title": "RAG Python 實作：最小流程與檢查步驟",
+    "text": "【自編教學示範，非外站擷取】這份 RAG implementation 用 Python 描述最小程式流程，並非可直接執行的套件範例。步驟一讀取文件，步驟二 chunking，步驟三建立索引，步驟四 retrieval，步驟五把結果交給生成模型。偽程式：chunks = split(documents); hits = search(query, chunks); answer = generate(query, hits)。實作時需另外決定函式內容、安裝依賴與 API 金鑰管理。先測試 search 是否找到正確段落，再檢查 answer 的引用。",
+    "links": ["https://demo.local/rag/chunking", "https://demo.local/rag/retrieval", "https://demo.local/rag/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/rag/versus-finetuning",
+    "title": "RAG 與 fine-tuning 微調的差異",
+    "text": "【自編教學示範，非外站擷取】RAG 在回答時提供外部證據，fine-tuning（微調）則修改模型參數。比較兩者的適用情境：經常更新且需要附來源的資料，可能適合先做 RAG；穩定的格式與行為需求，可能值得測試微調。這不是互斥選項，兩者可以結合。Trade-off 包含資料整理、查詢延遲、訓練成本與維護方式。微調不保證精確記住文件，RAG 也不保證每次都檢索正確，最後仍靠 evaluation 決定。",
+    "links": ["https://demo.local/rag/index", "https://demo.local/rag/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/agents/index",
+    "title": "AI Agent 入門：模型、工具與執行迴圈",
+    "text": "【自編教學示範，非外站擷取】AI Agent 可理解為會依任務選擇動作、使用工具並根據結果繼續處理的系統。這是本示範採用的工作定義，不是所有研究一致的定義。入門概念包括 LLM、tool calling、觀察結果與停止條件。簡單流程是接收目標、選工具、執行、讀結果，再決定下一步。Agent 不必擁有長期 memory，也不必由多個模型組成。從有限工具與明確停止條件開始，較容易驗證行為。",
+    "links": ["https://demo.local/agents/tools", "https://demo.local/agents/python", "https://demo.local/agents/memory", "https://demo.local/agents/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/agents/tools",
+    "title": "Tool calling 工具呼叫的概念與界線",
+    "text": "【自編教學示範，非外站擷取】Tool calling 讓模型產生工具名稱與參數，實際執行由應用程式負責。Agent 的 LLM 輸出不是自動獲得任意系統權限。Implementation 步驟：定義允許的工具、驗證參數、檢查權限、執行並記錄結果。範例工具 search_docs(query) 只搜尋文件，不寫入資料；涉及寄信或刪除的工具應有額外控制。外部文件中的命令不能被當成任務授權。",
+    "links": ["https://demo.local/agents/index", "https://demo.local/agents/python", "https://demo.local/agents/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/agents/python",
+    "title": "Python Agent 實作步驟：有上限的工具迴圈",
+    "text": "【自編教學示範，非外站擷取】Agent implementation 先只提供一個文件搜尋工具。Python 偽程式：for step in range(5): action = decide(messages); result = dispatch_allowed(action); messages.append(result)。這段 example 省略函式實作，目的在說明迴圈結構，不能直接執行。程式需要最大步數、timeout、工具 allowlist、參數驗證與錯誤處理。LLM 宣告完成不等於任務真的成功，應檢查結果。正式安裝步驟取決於選用套件版本。",
+    "links": ["https://demo.local/agents/index", "https://demo.local/agents/tools", "https://demo.local/agents/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/agents/memory",
+    "title": "Agent 記憶 memory 與上下文的比較",
+    "text": "【自編教學示範，非外站擷取】Agent 的短期上下文與長期 memory 是不同設計。上下文提供本輪推理需要的訊息；長期記憶可將選定資料存入外部儲存，再於需要時 retrieval。兩者差異包括保存時間、更新方式與刪除機制。不是記錄越多越好，過時或錯誤記憶可能影響回答。Comparison 時應評估正確性、隱私、查詢延遲與使用者控制；是否需要 memory 由任務決定。",
+    "links": ["https://demo.local/agents/index", "https://demo.local/agents/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/agents/evaluation",
+    "title": "Agent evaluation：不只看最後一句回答",
+    "text": "【自編教學示範，非外站擷取】Agent 評估要檢查任務是否完成、tool calling 是否正確、是否超出權限，以及失敗時能否停止。實作 evaluation 步驟是預先準備成功、工具失敗、資料不足與錯誤參數等情境，記錄每一步動作。程式可以設定步數與成本上限，避免無限迴圈。只看最終文字容易漏掉中間錯誤；應同時檢查可觀察結果。",
+    "links": ["https://demo.local/agents/index", "https://demo.local/agents/tools"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/agents/workflow-comparison",
+    "title": "固定 workflow 與 Agent 的適用情境比較",
+    "text": "【自編教學示範，非外站擷取】固定 workflow 由程式明確安排步驟，Agent 則讓模型參與部分動作選擇。比較時要看任務是否可預先拆解，以及額外彈性是否值得成本。簡單穩定的流程可以先用一般程式；需要根據不同資訊選擇下一步時，再評估 Agent。兩者並非完全互斥，固定流程中也可放入有限的模型決策。差異應以可控性、可靠性、延遲與 evaluation 結果判斷。",
+    "links": ["https://demo.local/agents/index", "https://demo.local/agents/evaluation"],
+    "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/general/announcement",
+    "title": "社團讀書會公告：LLM、RAG 與 Agent",
+    "text": "【自編教學示範，非外站擷取】下次讀書會將討論 LLM、RAG、Agent。本文只是活動公告，僅列主題名稱與聯絡方式，不提供教學內容。請依正式社團公告確認時間。這筆低相關資料用來觀察只比對關鍵字的限制，不是可報名的真實活動。",
+    "links": [], "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/other/hiking",
+    "title": "登山行前準備的練習文章",
+    "text": "【自編教學示範，非外站擷取】本文介紹裝備整理與路線記錄，是搜尋實驗中的領域外資料。它沒有本專題的技術內容。Paragraph 這個英文單字雖然包含某些縮寫的字母片段，搜尋時仍應檢查完整詞的邊界。",
+    "links": [], "source": "教學示範資料（自編）", "synthetic": true
+  },
+  {
+    "url": "https://demo.local/other/cooking",
+    "title": "番茄料理筆記",
+    "text": "【自編教學示範，非外站擷取】準備番茄、洋蔥與麵條，依照個人口味調味。這篇是刻意加入的領域外資料，沒有本專題的技術內容，用來確認搜尋結果不會因有步驟格式就取得高排名。",
+    "links": [], "source": "教學示範資料（自編）", "synthetic": true
+  }
+]

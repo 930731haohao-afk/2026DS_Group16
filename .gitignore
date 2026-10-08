@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+build/
+work/
+logs/
+outputs/
+*.log
+*.class
+.DS_Store
+.idea/
+.vscode/*.local.json
+# Course handout stays in the local coworker package, not the source repository.
+docs/reference/Lec3.pdf
