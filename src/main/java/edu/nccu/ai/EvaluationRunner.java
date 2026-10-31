@@ -42,7 +42,7 @@ public final class EvaluationRunner {
     }
 
     private static void usage() {
-        System.out.println("AI WEBSITE 離線評估\n"
+        System.out.println("AI SEARCH 離線評估\n"
             + "  prepare [output-dir] [--split dev|test]  預設僅執行 dev 題\n"
             + "  score input.csv [output.json]           僅計算人工填寫的 relevant 標記\n"
             + "prepare 不會呼叫 Google、Brave、Jev 或生成模型；不會自動判斷相關性。");

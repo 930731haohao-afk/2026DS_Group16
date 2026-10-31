@@ -366,13 +366,13 @@
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   $("export-search-json").addEventListener("click", () => {
-    if (state.report) download("AI WEBSITE_搜尋紀錄.json", JSON.stringify(state.report, null, 2), "application/json;charset=utf-8");
+    if (state.report) download("AI SEARCH_搜尋紀錄.json", JSON.stringify(state.report, null, 2), "application/json;charset=utf-8");
   });
   $("export-search-csv").addEventListener("click", () => {
     if (!state.report) return;
     const report = state.report;
     const rows = report.results.map((r, i) => [report.runId, report.query, report.searchQuery || report.query, report.intent, report.mode, i + 1, r.originalRank, r.title, r.url, r.contentStatus || (isDemoUrl(r.url) ? "demo" : r.tree?.status === "snippet" ? "snippet" : "fetched"), r.ruleScore, r.intentScore, r.jevScore, r.finalScore, JSON.stringify(r.counts || {})]);
-    download("AI WEBSITE_搜尋排名.csv", csvString(["runId", "query", "searchQuery", "intent", "mode", "rank", "originalRank", "title", "url", "contentStatus", "ruleScore", "intentScore", "jevScore", "finalScore", "counts"], rows), "text/csv;charset=utf-8");
+    download("AI SEARCH_搜尋排名.csv", csvString(["runId", "query", "searchQuery", "intent", "mode", "rank", "originalRank", "title", "url", "contentStatus", "ruleScore", "intentScore", "jevScore", "finalScore", "counts"], rows), "text/csv;charset=utf-8");
   });
 
   const countHostNote = node("p", "settings-help");
@@ -481,7 +481,7 @@
     selectedQuestions().forEach((q) => ["google", "baseline", "rules", "jev", "expanded"].forEach((system) => {
       for (let rank = 1; rank <= 5; rank++) rows.push({ queryId: q.id, system, rank, relevant: "", seconds: "" });
     }));
-    download("AI WEBSITE_評分空白表.csv", ratingsCsv(rows), "text/csv;charset=utf-8");
+    download("AI SEARCH_評分空白表.csv", ratingsCsv(rows), "text/csv;charset=utf-8");
   });
   $("export-prompts").addEventListener("click", () => {
     const promptSet = {
@@ -493,7 +493,7 @@
         record: { model: "", date: "", webSearchEnabled: "", plainOutput: "", strategyOutput: "", notes: "" }
       }))
     };
-    download("AI WEBSITE_LLM比較提示詞.json", JSON.stringify(promptSet, null, 2), "application/json;charset=utf-8");
+    download("AI SEARCH_LLM比較提示詞.json", JSON.stringify(promptSet, null, 2), "application/json;charset=utf-8");
   });
 
   function updateRatingState() {
@@ -523,7 +523,7 @@
     updateRatingState();
     $("rating-feedback").textContent = `已保存 ${queryId}／${systems[system] || system} 的前五筆判讀。請下載紀錄以免重新整理後遺失。`;
   });
-  $("download-ratings").addEventListener("click", () => download("AI WEBSITE_實驗觀察.csv", ratingsCsv(state.ratings), "text/csv;charset=utf-8"));
+  $("download-ratings").addEventListener("click", () => download("AI SEARCH_實驗觀察.csv", ratingsCsv(state.ratings), "text/csv;charset=utf-8"));
   $("clear-ratings").addEventListener("click", () => {
     if (!state.ratings.length || !window.confirm("清除這個分頁內的所有評估紀錄？尚未下載的紀錄將無法還原。")) return;
     state.ratings = []; updateRatingState(); $("rating-feedback").textContent = "評估紀錄已清除。";
