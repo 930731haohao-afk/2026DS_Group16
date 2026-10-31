@@ -59,7 +59,7 @@ public final class App implements AutoCloseable {
     public static void main(String[] args)throws Exception{
         Path root=Path.of(System.getenv().getOrDefault("APP_ROOT","."));Config config=Config.load(root);
         App app=new App(root,config);Runtime.getRuntime().addShutdownHook(new Thread(app::close));app.start();
-        System.out.println("AI Knowledge Search ready: http://"+config.value("APP_HOST","127.0.0.1")+":"+app.port());
+        System.out.println("AI WEBSITE ready: http://"+config.value("APP_HOST","127.0.0.1")+":"+app.port());
         System.out.println("Public encyclopedia/research search is available without keys. Demo is optional. Press Ctrl+C to stop.");
     }
     private void handle(HttpExchange exchange)throws IOException{
@@ -67,7 +67,7 @@ public final class App implements AutoCloseable {
             securityHeaders(exchange);
             String hostHeader=exchange.getRequestHeaders().getFirst("Host");
             if(hostHeader==null||!validHost(hostHeader)){send(exchange,403,Map.of("error","host","message","不允許的 Host"));return;}
-            if(!authorized(exchange)){exchange.getResponseHeaders().set("WWW-Authenticate","Basic realm=\"AI Knowledge Search\", charset=\"UTF-8\"");send(exchange,401,Map.of("error","auth","message","請輸入專案存取密碼"));return;}
+            if(!authorized(exchange)){exchange.getResponseHeaders().set("WWW-Authenticate","Basic realm=\"AI WEBSITE\", charset=\"UTF-8\"");send(exchange,401,Map.of("error","auth","message","請輸入專案存取密碼"));return;}
             String path=exchange.getRequestURI().getPath(),method=exchange.getRequestMethod();
             if(method.equals("GET")){
                 switch(path){
@@ -107,7 +107,7 @@ public final class App implements AutoCloseable {
         catch(ExecutionException e){if(e.getCause() instanceof Exception cause)throw cause;throw new IOException("搜尋處理失敗");}
     }
     private Map<String,Object> status(){
-        Map<String,Object> map=new LinkedHashMap<>();map.put("app","AI 知識搜尋");map.put("modeDefault","live");
+        Map<String,Object> map=new LinkedHashMap<>();map.put("app","AI WEBSITE");map.put("modeDefault","live");
         map.put("capabilities",Map.of("liveSearch",true,"webSearch",providers.searchAvailable(),"jev",providers.jevAvailable(),"answer",providers.answerAvailable()));
         map.put("liveProvider",providers.searchAvailable()?"Brave Search":"Wikipedia + Crossref");
         map.put("liveNotice",providers.searchAvailable()?"搜尋真實公開網頁，不限制 AI 議題或技術網域。未取得全文時保留來源摘要與原文連結，並標示資料範圍。":"免金鑰模式即時查詢 Wikipedia 百科與 Crossref 學術索引，涵蓋 AI 技術、政治、哲學、經濟等議題；這不是整個網際網路的索引。結果可開啟真實來源，全文未讀取時會標示。");
