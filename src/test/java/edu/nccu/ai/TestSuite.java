@@ -15,7 +15,7 @@ public final class TestSuite {
     private static int checks;
     private TestSuite() { }
     public static void main(String[]args)throws Exception{
-        checks+=CoreTests.run();checks+=ProvidersTest.run();checks+=PublicSearchTests.run();checks+=EvaluationRunnerTests.run();json();security();evaluation();api();
+        checks+=CoreTests.run();checks+=ScoreQaTests.run();checks+=ProvidersTest.run();checks+=PublicSearchTests.run();checks+=EvaluationRunnerTests.run();json();security();evaluation();api();
         System.out.println("PASS: "+checks+" checks (core, providers, security, metrics, HTTP integration)");
     }
     private static void check(boolean condition,String message){checks++;if(!condition)throw new AssertionError(message);}
